@@ -577,6 +577,13 @@ class SSDB
       perform ["multi_zdel", key, *members], proc: T_INT
     end
   end
+  
+  def qlist(start="", stop="", opts = {})
+    limit = opts[:limit] || -1
+    mon_synchronize do
+      perform ["qlist", start, stop, limit], multi: true, proc: T_STRARR
+    end
+  end
 
   private
 
